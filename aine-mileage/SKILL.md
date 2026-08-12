@@ -9,9 +9,9 @@ description: Use when filing daily home-to-GHQ commute mileage for a week of AIN
 
 Automates adding daily commute mileage line items (home ↔ GHQ) to a WWT
 expense report for one week of AINE bootcamp facilitation, using browser
-automation against `https://expenses.apps.wwt.com/`. It finds or creates the
-report and adds line items — **it never clicks Submit**. The user submits
-manually after reviewing.
+automation against the expenses app (URL from config). It finds or creates
+the report and adds line items — **it never clicks Submit**. The user
+submits manually after reviewing.
 
 ## When to Use
 
@@ -22,22 +22,25 @@ cohort number is given, ask for one before doing anything else.
 
 - **Chrome browser tools**: load them before starting — `ToolSearch` with
   `select:mcp__claude-in-chrome__tabs_context_mcp,mcp__claude-in-chrome__navigate,mcp__claude-in-chrome__computer,mcp__claude-in-chrome__read_page,mcp__claude-in-chrome__tabs_create_mcp,mcp__claude-in-chrome__tabs_close_mcp,mcp__claude-in-chrome__find,mcp__claude-in-chrome__get_page_text`.
-- **Home address config**: read `data/config.md` in this skill's directory
-  for `home_address`. This file is gitignored (personal data, this repo is
-  public) — if it's missing, stop and ask the user for their home address,
-  then create `data/config.md` with:
+- **Config file**: read `data/config.md` in this skill's directory for
+  `home_address`, `ghq_address`, and `expenses_url`. This file is
+  gitignored (this repo is public) — if it's missing or any key is absent,
+  stop and ask the user for the missing value(s), then create/update
+  `data/config.md` with:
   ```
   home_address: <address>
+  ghq_address: <address>
+  expenses_url: <url>
   ```
-  Never put a real home address anywhere else in this repo.
+  Never put these values anywhere else in this repo (SKILL.md, commits,
+  etc.) — always read them from config at runtime.
 
 ## Fixed constants
 
-These are not personal/sensitive — safe to use directly:
+These are not personal/sensitive — safe to hardcode:
 
 | Field | Value |
 |---|---|
-| GHQ address | `1 World Wide Way, St. Louis, MO 63146` |
 | Trip distance | `20` (miles, every leg) |
 | Project | `10034890 - Corporate AI Native Initiative` |
 | Task | `01 - Support` |
@@ -54,7 +57,7 @@ Monday (bootcamps are confirmed single Mon–Fri weeks).
 
 ### 2. Open the expenses app
 
-Navigate to `https://expenses.apps.wwt.com/report`. Assume the existing
+Navigate to `{expenses_url}/report` (from config). Assume the existing
 Chrome session's SSO is valid. If a login page appears instead of the
 reports list, **stop** and tell the user to log in manually, then re-run
 the skill.
@@ -104,8 +107,8 @@ For each of Mon–Fri:
   | Field | AM leg (commute in) | PM leg (commute home) |
   |---|---|---|
   | Justification | `Coming from home to GHQ to facilitate AINE cohort {N}` | `Going home from GHQ after facilitating AINE Bootcamp {N}` |
-  | From | home address | GHQ address |
-  | To | GHQ address | home address |
+  | From | `home_address` (config) | `ghq_address` (config) |
+  | To | `ghq_address` (config) | `home_address` (config) |
   | Project | `10034890 - Corporate AI Native Initiative` | (same) |
   | Task | `01 - Support` (select after Project — it's disabled until Project is chosen) | (same) |
   | Trip Distance (Miles) | `20` | `20` |
@@ -127,7 +130,7 @@ For each of Mon–Fri:
 ### 6. Report back and stop
 
 Give the user:
-- The report URL: `https://expenses.apps.wwt.com/report/{report_id}`
+- The report URL: `{expenses_url}/report/{report_id}`
 - Which dates got lines added
 - Which dates were skipped/flagged, and why
 - An explicit reminder that the report was **not** submitted
