@@ -92,8 +92,20 @@ target weekdays already have at least one line item.
 
 ### 5. Add line items for each day that needs them
 
+The site **rejects future-dated mileage entries** — it won't error visibly,
+it just silently reverts the Date field back to today's date no matter what
+you type or how you close the calendar. If a day hasn't happened yet
+(later than today), don't attempt it — skip straight to flagging it for the
+user rather than retrying the date field, which will not succeed. (Visual
+tell if you're checking the calendar popover directly: dates after today
+render in a dimmer gray and aren't selectable.) Tell the user which dates
+were skipped for this reason and that they'll need to re-run the skill on
+or after those dates.
+
 For each of Mon–Fri:
 
+- **Date is later than today** → skip it (see above); flag as "not yet
+  occurred" rather than lumping it in with other skip reasons.
 - **Date already has ≥1 existing line item** → skip it. Add it to a
   "flagged" list to report at the end. Do not try to guess whether one or
   two legs are missing, and do not match by justification text — some
@@ -132,7 +144,8 @@ For each of Mon–Fri:
 Give the user:
 - The report URL: `{expenses_url}/report/{report_id}`
 - Which dates got lines added
-- Which dates were skipped/flagged, and why
+- Which dates were skipped/flagged, and why (distinguish "already had a
+  line item" from "hasn't happened yet" — the latter needs a re-run later)
 - An explicit reminder that the report was **not** submitted
 
 **Never click Submit.** That's the user's step.
@@ -150,3 +163,6 @@ Give the user:
 - Clicking straight into the Justification *input* (or anywhere near the
   calendar) right after typing the Date — click its `<label>` text instead
   (see Date field quirk above), or the date can silently revert.
+- Repeatedly retrying a date that keeps reverting to today — check
+  first whether that date is in the future. If so, it's not a UI glitch,
+  it's the site rejecting a future-dated entry; stop retrying and flag it.
