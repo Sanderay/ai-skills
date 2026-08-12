@@ -114,6 +114,16 @@ For each of Mon–Fri:
   part of the name, then click the matching suggestion; don't rely on
   typing the full value.
 
+  **Date field quirk:** after typing the date, the calendar popover can
+  swallow your next click and either reopen/toggle instead of moving focus,
+  or (if the click lands on the currently-selected day cell) deselect it
+  back to blank. The reliable way to move on is to click the **label text**
+  of the next field (e.g. "Justification") rather than the input or
+  anywhere inside/near the calendar — clicking a `<label>` focuses its
+  input via native browser behavior and doesn't get intercepted by the
+  popover. After doing this, take a screenshot to confirm the date held
+  before typing further fields.
+
 ### 6. Report back and stop
 
 Give the user:
@@ -134,3 +144,6 @@ Give the user:
   don't guess; skip and flag it instead.
 - Forgetting Task is disabled until Project is selected — select Project
   first, then Task becomes available.
+- Clicking straight into the Justification *input* (or anywhere near the
+  calendar) right after typing the Date — click its `<label>` text instead
+  (see Date field quirk above), or the date can silently revert.
