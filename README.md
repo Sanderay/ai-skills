@@ -28,3 +28,7 @@ the way `usage-review/data/` is excluded here. This repo is public.
 - **usage-review** — bi-weekly/monthly personal review of AI-tooling usage
   (Claude Code, Devin Local): spend trend, model-selection judgment, skill
   leverage, git-history correlation, published as an Artifact.
+- **aine-mileage** — files daily home-to-GHQ commute mileage for a week of
+  AINE bootcamp facilitation into WWT's internal expense app, stopping
+  short of submission. Needs a personal, gitignored `aine-mileage/data/config.md`
+  with your home address — see the skill for the format.
