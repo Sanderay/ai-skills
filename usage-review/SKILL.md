@@ -142,25 +142,42 @@ their call to make, not a default.
    commits where relevant (a commit in a repo that also shows Devin session
    activity that week is worth naming).
 
-10. **Write the report as a fresh Artifact**, following the same visual
-    design system as the "Engineering Practice Review — July 2026" artifact
-    from this skill's origin conversation: utilitarian memo treatment (not
-    editorial/hero-driven), the serif/sans/mono three-role type pairing, the
-    teal accent + sequential cost-tier ramp, strength/friction chips, a
-    numbered recommendations list. Before writing:
-    - Load the `artifact-design` skill (utilitarian treatment — this is a
-      memo/report, not a landing page) and `dataviz` skill (for the weekly
-      spend-by-model chart) if either isn't already loaded this session.
+10. **Write the report as a fresh Artifact, built directly on the
+    "Engineering Practice Review — July 2026" artifact as a template.**
+    `reference/engineering-practice-review-template.html` in this skill's
+    directory is a saved, clean copy of that original July report — reuse
+    its CSS and component markup as-is rather than re-deriving a new design
+    each run; only the content (numbers, weeks, commit quotes, chip/rec
+    text) changes per period. This is a fixed template, not a style
+    reference to reinterpret:
+    - **Title** the artifact `Engineering Practice Review — <Month> <Year>`
+      (both the `<title>` tag and the Artifact `title`/gallery name) — this
+      is the series name across every period, not a one-off.
+    - **Byline**: every report's meta-row includes `Prepared by: Ray Sanders`
+      and `Role: Lead Software Engineer`, alongside `Period` and `Product`,
+      exactly as the July template has it.
+    - Reuse its exact structure: eyebrow + h1 ("AI-Assisted Workflow,
+      \<Month\> \<Year\>") + dek + lens-row (Judgment / Leverage / Risk
+      management / Systemization) + meta-row → stat-grid (4 tiles) → weekly
+      spend-by-model chart (stacked SVG bar, hover tooltip, a collapsed
+      exact-figures table) → narrative tying spend to real commits (bold
+      lead line + evidence blockquote with real commit subjects) →
+      strength/friction chips → numbered recommendations → footer.
+    - Reuse its CSS tokens and type system as-is (Iowan Old Style / system
+      sans / system mono, the `--accent` teal) — don't introduce a new
+      palette or font pairing per run.
+    - Before writing, load the `artifact-design` skill (utilitarian
+      treatment — this is a memo/report, not a landing page) and `dataviz`
+      skill (for the weekly spend-by-model chart) if either isn't already
+      loaded this session — mainly to sanity-check the reused template
+      still holds up, not to redesign it.
     - Name the output file with the period end date so each run mints a new
       artifact (a historical series), e.g.
       `usage-review-<period_end>.html` — don't overwrite the previous
       period's artifact.
-    - Reuse the section shape: intro stat row → weekly chart → narrative
-      tying spend to real commits → strengths → friction patterns →
-      numbered recommendations → footer disclosing the period covered and
-      whether figures came from Console screenshots or the flagged estimate.
-    - Include a short "since last review" line in the intro if a trend log
-      row exists from a prior run.
+    - Include a short "since last review" line (styled like the template's
+      `.trend-note`) in the intro if a trend log row exists from a prior
+      run.
 
 11. **Report back to the user in chat**: period covered, the artifact link,
     and 3-5 sentences of the actual headline findings (don't just say "done,
@@ -173,3 +190,10 @@ their call to make, not a default.
   update it when Anthropic revises rates or a new model ID appears in
   `unknown_models`.
 - `data/trend_log.csv` — one row per run, created automatically on first use.
+- `reference/engineering-practice-review-template.html` — the fixed design
+  template (July 2026's original report, cleaned of artifact-frame
+  boilerplate). Reuse its CSS and markup verbatim each run; swap in the
+  current period's title, meta-row, stats, chart data, narrative, chips, and
+  recommendations. Every report keeps the "Engineering Practice Review —
+  \<Month\> \<Year\>" title and the `Prepared by: Ray Sanders` /
+  `Role: Lead Software Engineer` byline in its meta-row.

@@ -1,0 +1,650 @@
+<title>Engineering Practice Review — July 2026</title>
+<style>
+  :root {
+    --paper: #f6f7f6;
+    --surface: #ffffff;
+    --ink: #151a1c;
+    --ink-2: #4c5658;
+    --ink-3: #7a8386;
+    --line: #dde2e1;
+    --line-strong: #c6cccb;
+    --accent: #0e7c86;
+    --accent-ink: #ffffff;
+    --accent-tint: #e3f0f0;
+    --good: #3f8f5b;
+    --good-tint: #e7f3ea;
+    --warn: #a3721f;
+    --warn-tint: #fbf1df;
+    --ramp-1: #d3eae9;
+    --ramp-2: #6fafaf;
+    --ramp-3: #0e5c63;
+
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "URW Palladio L", Georgia, serif;
+    --font-body: -apple-system, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #101415;
+      --surface: #171c1d;
+      --ink: #ecefed;
+      --ink-2: #aeb6b6;
+      --ink-3: #7c8686;
+      --line: #262d2e;
+      --line-strong: #323b3c;
+      --accent: #3fc3c9;
+      --accent-ink: #08201f;
+      --accent-tint: #16302f;
+      --good: #5cb87d;
+      --good-tint: #163124;
+      --warn: #d9a34b;
+      --warn-tint: #332711;
+      --ramp-1: #223938;
+      --ramp-2: #3f8484;
+      --ramp-3: #4be0e5;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #101415;
+    --surface: #171c1d;
+    --ink: #ecefed;
+    --ink-2: #aeb6b6;
+    --ink-3: #7c8686;
+    --line: #262d2e;
+    --line-strong: #323b3c;
+    --accent: #3fc3c9;
+    --accent-ink: #08201f;
+    --accent-tint: #16302f;
+    --good: #5cb87d;
+    --good-tint: #163124;
+    --warn: #d9a34b;
+    --warn-tint: #332711;
+    --ramp-1: #223938;
+    --ramp-2: #3f8484;
+    --ramp-3: #4be0e5;
+  }
+  :root[data-theme="light"] {
+    --paper: #f6f7f6;
+    --surface: #ffffff;
+    --ink: #151a1c;
+    --ink-2: #4c5658;
+    --ink-3: #7a8386;
+    --line: #dde2e1;
+    --line-strong: #c6cccb;
+    --accent: #0e7c86;
+    --accent-ink: #ffffff;
+    --accent-tint: #e3f0f0;
+    --good: #3f8f5b;
+    --good-tint: #e7f3ea;
+    --warn: #a3721f;
+    --warn-tint: #fbf1df;
+    --ramp-1: #d3eae9;
+    --ramp-2: #6fafaf;
+    --ramp-3: #0e5c63;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--ink-3);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 2.1rem;
+    line-height: 1.15;
+    margin: 0.5rem 0 0.35rem;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  .dek {
+    font-size: 1.05rem;
+    color: var(--ink-2);
+    max-width: 42rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-3);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 0.65rem 0;
+    margin-bottom: 2.75rem;
+  }
+  .meta-row span b { color: var(--ink-2); font-weight: 600; }
+
+  .lens-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.9rem 0 0;
+  }
+  .lens {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.45rem;
+    margin: 0 0 0.3rem;
+    text-wrap: balance;
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+  }
+  section { margin-bottom: 3.25rem; }
+  section > p { max-width: 66ch; color: var(--ink-2); }
+  section > p.lead { color: var(--ink); }
+
+  /* stat tiles */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 1.75rem 0 0.5rem;
+  }
+  .stat {
+    background: var(--surface);
+    padding: 1.1rem 1rem;
+  }
+  .stat .label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-3);
+    margin-bottom: 0.45rem;
+  }
+  .stat .value {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .stat .sub {
+    font-size: 0.76rem;
+    color: var(--ink-3);
+    margin-top: 0.3rem;
+  }
+  @media (max-width: 640px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* chart */
+  .chart-wrap {
+    margin-top: 1.75rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    padding: 1.5rem 1.25rem 1.1rem;
+  }
+  .chart-scroll { overflow-x: auto; }
+  .legend {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--ink-2);
+    margin-bottom: 0.9rem;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .bar-seg { cursor: pointer; }
+  .bar-seg:hover, .bar-seg:focus { opacity: 0.82; }
+  .axis-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    fill: var(--ink-3);
+  }
+  .grid-line { stroke: var(--line); stroke-width: 1; }
+  .total-label {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 600;
+    fill: var(--ink);
+  }
+  .chart-footnote {
+    font-size: 0.78rem;
+    color: var(--ink-3);
+    margin: 0.9rem 0 0;
+  }
+  #tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    padding: 0.4rem 0.55rem;
+    border-radius: 4px;
+    line-height: 1.4;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    z-index: 10;
+    white-space: nowrap;
+  }
+
+  details {
+    margin-top: 0.85rem;
+    font-size: 0.85rem;
+  }
+  summary {
+    cursor: pointer;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  summary:focus-visible, a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  table {
+    border-collapse: collapse;
+    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    width: 100%;
+  }
+  th, td {
+    text-align: right;
+    padding: 0.35rem 0.7rem;
+    border-bottom: 1px solid var(--line);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--ink-3); font-weight: 500; text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.04em; }
+
+  /* evidence callout */
+  blockquote.evidence {
+    margin: 1.1rem 0;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-tint);
+    border-radius: 0 4px 4px 0;
+  }
+  blockquote.evidence code {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  blockquote.evidence cite {
+    display: block;
+    font-style: normal;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--ink-3);
+    margin-top: 0.4rem;
+  }
+
+  /* strength / friction lists */
+  .item-list { list-style: none; margin: 1.5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1.1rem; }
+  .item-list li { display: grid; grid-template-columns: auto 1fr; gap: 0.9rem; align-items: start; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    margin-top: 0.15rem;
+  }
+  .chip.good { background: var(--good-tint); color: var(--good); }
+  .chip.warn { background: var(--warn-tint); color: var(--warn); }
+  .item-body b { color: var(--ink); }
+  .item-body p { margin: 0.25rem 0 0; color: var(--ink-2); font-size: 0.94rem; }
+
+  /* recommendations */
+  ol.recs { margin: 1.5rem 0 0; padding: 0; list-style: none; counter-reset: rec; display: flex; flex-direction: column; gap: 1.15rem; }
+  ol.recs li { counter-increment: rec; position: relative; padding-left: 2.4rem; }
+  ol.recs li::before {
+    content: counter(rec, decimal-leading-zero);
+    position: absolute;
+    left: 0; top: 0.05rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+  }
+  ol.recs b { color: var(--ink); }
+  ol.recs p { margin: 0.2rem 0 0; color: var(--ink-2); font-size: 0.94rem; }
+
+  footer {
+    margin-top: 3.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    color: var(--ink-3);
+  }
+</style>
+
+<main>
+  <p class="eyebrow">Engineering practice review — self-assessment</p>
+  <h1>AI-Assisted Workflow, July 2026</h1>
+  <p class="dek">A review of how AI tooling was used across cohort infrastructure, eval grading, and program operations this month — cost against delivery, judgment on model selection, and the practice gaps worth closing before the next cohort.</p>
+  <div class="lens-row">
+    <span class="lens">Judgment</span>
+    <span class="lens">Leverage</span>
+    <span class="lens">Risk management</span>
+    <span class="lens">Systemization</span>
+  </div>
+  <div class="meta-row">
+    <span>Period: <b>Jul 1 – 28, 2026</b></span>
+    <span>Product: <b>Claude Code, 100% of spend</b></span>
+    <span>Prepared by: <b>Ray Sanders</b></span>
+    <span>Role: <b>Lead Software Engineer</b></span>
+  </div>
+
+  <section id="overview">
+    <p class="section-num">01</p>
+    <h2>The month in four numbers</h2>
+    <p class="lead">Spend tracked delivery closely this month — the two heaviest weeks both correspond to real, identifiable engineering events, not diffuse usage.</p>
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="label">Total spend</div>
+        <div class="value">$486.48</div>
+        <div class="sub">of $10,000 monthly allocation</div>
+      </div>
+      <div class="stat">
+        <div class="label">Budget used</div>
+        <div class="value">4.9%</div>
+        <div class="sub">headroom is not the constraint</div>
+      </div>
+      <div class="stat">
+        <div class="label">Skills active</div>
+        <div class="value">13</div>
+        <div class="sub">46 invocations across the month</div>
+      </div>
+      <div class="stat">
+        <div class="label">Weeks reviewed</div>
+        <div class="value">4</div>
+        <div class="sub">one mandated eval cycle</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="chart">
+    <p class="section-num">02</p>
+    <h2>Spend by week, by model tier</h2>
+    <p class="lead">Each week's model mix lines up with what was actually being built, not with habit. Hover a segment for the exact figure.</p>
+
+    <div class="chart-wrap" style="position:relative;">
+      <div class="legend">
+        <span><i class="swatch" style="background:var(--ramp-1)"></i>Haiku 4.5</span>
+        <span><i class="swatch" style="background:var(--ramp-2)"></i>Sonnet 5</span>
+        <span><i class="swatch" style="background:var(--ramp-3)"></i>Opus (4.8 → 5)</span>
+      </div>
+      <div class="chart-scroll">
+        <svg id="chart-svg" width="640" height="300" viewBox="0 0 640 300" role="img" aria-label="Weekly Claude Code spend by model, four weeks in July 2026"></svg>
+      </div>
+      <p class="chart-footnote">Opus 4.8 carried the model tier through Jul 6–20; Opus 5 replaced it starting the week of Jul 27. Haiku spend is real but under $0.10/week — present in the totals, invisible at this scale.</p>
+      <details>
+        <summary>View exact figures</summary>
+        <table id="figures-table">
+          <thead><tr><th>Week of</th><th>Haiku 4.5</th><th>Sonnet 5</th><th>Opus</th><th>Total</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </details>
+      <div id="tooltip"></div>
+    </div>
+  </section>
+
+  <section id="narrative">
+    <p class="section-num">03</p>
+    <h2>What each week was actually paying for</h2>
+    <p><b>Jul 6 — $172.96, 59% Opus.</b> A full security pass on the bedrock-proxy: swapping open SSH for SSM Session Manager, closing the proxy's internet-facing port, scoping IAM down to Anthropic models only, moving the API key into Secrets Manager, adding a CloudWatch audit log, and catching a real SSM 4096-character chunking bug along the way.</p>
+    <blockquote class="evidence">
+      <code>security: replace open SSH with SSM Session Manager for CI deploys<br>security: close port 3999 to internet, route CI via SSM proxy<br>security: scope bedrock-proxy IAM to Anthropic models only<br>fix: chunk SSM commands to stay within 4096-char per-element limit</code>
+      <cite>aine-forge-infra-c0 — commits dated Jul 5–6, 2026</cite>
+    </blockquote>
+    <p><b>Jul 13 — $191.02, 66% Opus.</b> The mandated cost: forge-eval-3 grading against an 11-participant cohort. The skill invocation itself was $10.45 of that — the rest is the grading work the rule requires Opus for.</p>
+    <p><b>Jul 20 — $57.78, 27% Opus.</b> A routine week, correctly priced as one: Sonnet carried nearly three-quarters of the spend.</p>
+    <p><b>Jul 27 — $64.72, 74% Opus 5.</b> The first cohort ever provisioned outside <code style="font-family:var(--font-mono);font-size:0.9em;">us-east-1</code> — India's cohort 8, in <code style="font-family:var(--font-mono);font-size:0.9em;">ap-south-1</code>, ahead of an Aug 3–7 start. A plan was written before anything was touched, then four separate runbook defects were found and fixed live during provisioning.</p>
+    <blockquote class="evidence">
+      <code>docs: design + implementation plan for cohort 8 in ap-south-1<br>feat: enable India-region deploys (global.anthropic.* IAM + AWS_REGION var)<br>docs: record four runbook defects found in execution<br>docs: Tasks 7-8 complete — c8 verified end-to-end in ap-south-1</code>
+      <cite>aine-forge-infra-c0 — commits dated Jul 27, 2026</cite>
+    </blockquote>
+  </section>
+
+  <section id="strengths">
+    <p class="section-num">04</p>
+    <h2>Working well</h2>
+    <ul class="item-list">
+      <li>
+        <span class="chip good">Strength</span>
+        <div class="item-body">
+          <b>Skill-building as leverage, not just personal speed.</b>
+          <p>13 distinct skills carried 46 invocations this month — <code style="font-family:var(--font-mono)">forge-eval-3</code>, <code style="font-family:var(--font-mono)">gather-cohort-data</code>, <code style="font-family:var(--font-mono)">provision-cohort-infra</code>, <code style="font-family:var(--font-mono)">setup-bootcamp-repos</code>. Cohort operations that used to be re-explained each time are now encoded once and reused.</p>
+        </div>
+      </li>
+      <li>
+        <span class="chip good">Strength</span>
+        <div class="item-body">
+          <b>Plan before touching production infrastructure.</b>
+          <p>The first non-us-east-1 region cutover started with a written design and implementation plan, committed before any live provisioning — the right sequence for a first-of-kind, deadline-bound change.</p>
+        </div>
+      </li>
+      <li>
+        <span class="chip good">Strength</span>
+        <div class="item-body">
+          <b>Defects get closed into the system, not patched around.</b>
+          <p>Runbook gaps found live during the ap-south-1 rollout were written back into the provisioning skill immediately, and a scoping issue from cohort 7 was filed as a structural follow-up rather than a one-off fix.</p>
+        </div>
+      </li>
+      <li>
+        <span class="chip good">Strength</span>
+        <div class="item-body">
+          <b>Security work runs as a dedicated pass, not firefighting.</b>
+          <p>The bedrock-proxy hardening — SSH removal, port closure, IAM scoping, secrets management, audit logging — landed as one coherent effort rather than a string of reactive patches.</p>
+        </div>
+      </li>
+      <li>
+        <span class="chip good">Strength</span>
+        <div class="item-body">
+          <b>Model selection tracks task difficulty.</b>
+          <p>Opus usage swung from 27% to 74% across the month, and every swing maps to a real reason — mandated grading, a security-critical rebuild, a first-of-kind region migration. The lightest week ran mostly on Sonnet.</p>
+        </div>
+      </li>
+      <li>
+        <span class="chip good">Strength</span>
+        <div class="item-body">
+          <b>Corrections are paid for once.</b>
+          <p>Shell-dialect mistakes, infra path assumptions, and PDF-format variance are all recorded with the why and the fix, so the same live incident doesn't recur across cohorts.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="friction">
+    <p class="section-num">05</p>
+    <h2>Costing time</h2>
+    <ul class="item-list">
+      <li>
+        <span class="chip warn">Friction</span>
+        <div class="item-body">
+          <b>Shell-dialect assumptions still cause live redos.</b>
+          <p>Three separate zsh-vs-bash incidents this stretch — unquoted word-splitting, a bash-only array expansion, an associative-array feature stock bash doesn't support — each caught mid-task rather than prevented. The fix (write multi-line or loop logic to a file and invoke it explicitly) is known but not yet the default.</p>
+        </div>
+      </li>
+      <li>
+        <span class="chip warn">Friction</span>
+        <div class="item-body">
+          <b>Infra assumptions surface live instead of being checked first.</b>
+          <p>Both the infra workspace path and a pinned database engine version turned out stale mid-task. A short verification step before the first live command — the same instinct already applied to the ap-south-1 cutover — would catch these earlier.</p>
+        </div>
+      </li>
+      <li>
+        <span class="chip warn">Friction</span>
+        <div class="item-body">
+          <b>Team-membership gaps compound across cohorts instead of closing.</b>
+          <p>Every recent cohort — C4 through C8 — currently carries an open org-access or missing-handle gap. Nothing forces this to zero before the next cohort starts; it currently gets caught up on, not closed out.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="recs">
+    <p class="section-num">06</p>
+    <h2>Next month</h2>
+    <ol class="recs">
+      <li>
+        <b>Move infra verification earlier.</b>
+        <p>Apply the ap-south-1 plan-first pattern one step earlier: confirm region, workspace path, and engine version against the live state before the first command in any provisioning skill, not partway through.</p>
+      </li>
+      <li>
+        <b>Default shell logic to a file, not an inline heredoc.</b>
+        <p>Any multi-line or loop shell logic in a skill gets written to the scratchpad and invoked as an explicit <code style="font-family:var(--font-mono)">bash script.sh</code> — closes the zsh/bash gap structurally instead of re-discovering it per cohort.</p>
+      </li>
+      <li>
+        <b>Make the team-membership check a standing pre-cohort gate.</b>
+        <p>Add a go/no-go item to cohort kickoff: zero open org-access or missing-handle rows before day one, not a backlog carried forward.</p>
+      </li>
+      <li>
+        <b>Evaluate sharing the highest-reuse skills with co-facilitators.</b>
+        <p><code style="font-family:var(--font-mono)">forge-eval-3</code> and <code style="font-family:var(--font-mono)">gather-cohort-data</code> are the two most-invoked skills this month. Turning personal leverage into team leverage is the next lever available as a lead, not just a personal one.</p>
+      </li>
+      <li>
+        <b>Keep the plan-first, defects-into-the-runbook posture as default.</b>
+        <p>It's the reason the next non-us-east-1 cohort won't repay this month's discovery cost — worth protecting deliberately, not assuming it repeats on its own.</p>
+      </li>
+    </ol>
+  </section>
+
+  <footer>
+    Based on July 2026 Claude Code usage data (product, model, and skill-invocation views) and commit history from <code style="font-family:var(--font-mono)">aine-forge-infra-c0</code>. A personal engineering record, not a team-wide audit.
+  </footer>
+</main>
+
+<script>
+  (function () {
+    const weeks = [
+      { label: "Jul 6",  haiku: 0.02, sonnet: 70.12, opus: 102.82, opusModel: "Opus 4.8" },
+      { label: "Jul 13", haiku: 0.09, sonnet: 64.37, opus: 126.56, opusModel: "Opus 4.8" },
+      { label: "Jul 20", haiku: 0.08, sonnet: 42.16, opus: 15.55,  opusModel: "Opus 4.8" },
+      { label: "Jul 27", haiku: 0.00, sonnet: 16.83, opus: 47.89,  opusModel: "Opus 5" }
+    ];
+
+    const svg = document.getElementById("chart-svg");
+    const tooltip = document.getElementById("tooltip");
+    const wrap = document.querySelector(".chart-wrap");
+    const W = 640, H = 300;
+    const plotTop = 20, plotBottom = 250, plotLeft = 50, plotRight = 620;
+    const maxVal = 200;
+    const barW = 70;
+    const gap = (plotRight - plotLeft - barW * weeks.length) / (weeks.length - 1 + 2);
+
+    function y(v) { return plotBottom - (v / maxVal) * (plotBottom - plotTop); }
+    function h(v) { return (v / maxVal) * (plotBottom - plotTop); }
+
+    let svgMarkup = "";
+    // gridlines
+    [0, 40, 80, 120, 160, 200].forEach(function (v) {
+      svgMarkup += '<line class="grid-line" x1="' + plotLeft + '" x2="' + plotRight + '" y1="' + y(v) + '" y2="' + y(v) + '" />';
+      svgMarkup += '<text class="axis-label" x="' + (plotLeft - 10) + '" y="' + (y(v) + 4) + '" text-anchor="end">$' + v + '</text>';
+    });
+
+    weeks.forEach(function (wk, i) {
+      const x = plotLeft + gap + i * (barW + gap);
+      let cursor = plotBottom;
+      const segs = [
+        { key: "haiku", val: wk.haiku, color: "var(--ramp-1)", name: "Haiku 4.5" },
+        { key: "sonnet", val: wk.sonnet, color: "var(--ramp-2)", name: "Sonnet 5" },
+        { key: "opus", val: wk.opus, color: "var(--ramp-3)", name: wk.opusModel }
+      ];
+      segs.forEach(function (seg, si) {
+        const segH = h(seg.val);
+        const segY = cursor - segH;
+        const isTop = si === segs.length - 1;
+        const rx = isTop ? 4 : 0;
+        svgMarkup += '<rect class="bar-seg" data-week="' + wk.label + '" data-name="' + seg.name +
+          '" data-val="' + seg.val.toFixed(2) + '" x="' + x + '" y="' + segY + '" width="' + barW +
+          '" height="' + Math.max(segH, 0) + '" fill="' + seg.color + '" rx="' + rx + '" />';
+        cursor -= (segH + (si < segs.length - 1 ? 2 : 0));
+      });
+      const total = wk.haiku + wk.sonnet + wk.opus;
+      svgMarkup += '<text class="total-label" x="' + (x + barW / 2) + '" y="' + (y(total) - 10) + '" text-anchor="middle">$' + total.toFixed(0) + '</text>';
+      svgMarkup += '<text class="axis-label" x="' + (x + barW / 2) + '" y="' + (plotBottom + 22) + '" text-anchor="middle">' + wk.label + '</text>';
+    });
+
+    svg.innerHTML = svgMarkup;
+
+    svg.querySelectorAll(".bar-seg").forEach(function (rect) {
+      rect.addEventListener("mouseenter", function (e) {
+        const name = rect.getAttribute("data-name");
+        const val = rect.getAttribute("data-val");
+        const week = rect.getAttribute("data-week");
+        tooltip.textContent = "Week of " + week + " — " + name + ": $" + val;
+        tooltip.style.opacity = "1";
+      });
+      rect.addEventListener("mousemove", function (e) {
+        const wrapRect = wrap.getBoundingClientRect();
+        tooltip.style.left = (e.clientX - wrapRect.left + 12) + "px";
+        tooltip.style.top = (e.clientY - wrapRect.top - 10) + "px";
+      });
+      rect.addEventListener("mouseleave", function () {
+        tooltip.style.opacity = "0";
+      });
+    });
+
+    const tbody = document.querySelector("#figures-table tbody");
+    weeks.forEach(function (wk) {
+      const total = wk.haiku + wk.sonnet + wk.opus;
+      const tr = document.createElement("tr");
+      tr.innerHTML = "<td>" + wk.label + "</td><td>$" + wk.haiku.toFixed(2) + "</td><td>$" + wk.sonnet.toFixed(2) +
+        "</td><td>$" + wk.opus.toFixed(2) + " (" + wk.opusModel + ")</td><td>$" + total.toFixed(2) + "</td>";
+      tbody.appendChild(tr);
+    });
+  })();
+</script>
+
